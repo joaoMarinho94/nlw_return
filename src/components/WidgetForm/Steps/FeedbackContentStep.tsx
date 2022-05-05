@@ -1,8 +1,9 @@
-import { ArrowLeft, Camera } from 'phosphor-react';
-import React from 'react';
+import { ArrowLeft } from 'phosphor-react';
+import React, { useState } from 'react';
 
 import { CloseButton } from '../../CloseButton';
 import { FeedbackType, feedbackTypes } from '..';
+import { ScreeshortButton } from '../ScreenshortButton';
 
 interface FeedbackContentStepProps {
   feedbackType: FeedbackType;
@@ -13,6 +14,8 @@ export function FeedbackContentStep({
   feedbackType,
   onFeedbackRestartRequested,
 }: FeedbackContentStepProps) {
+  const [screenchort, setScreenchort] = useState<string | null>(null);
+
   const feedbackTypeInfo = feedbackTypes[feedbackType];
 
   return (
@@ -45,12 +48,10 @@ export function FeedbackContentStep({
         ></textarea>
 
         <footer className="flex gap-2 mt-2">
-          <button
-            type="button"
-            className="p-2 bg-zinc-800 rounded-md border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500"
-          >
-            <Camera className="w-6 h-6" />
-          </button>
+          <ScreeshortButton
+            screenchort={screenchort}
+            onScreenshortTook={setScreenchort}
+          />
 
           <button className="p-2 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transtion-colors">
             Enviar Feedback
