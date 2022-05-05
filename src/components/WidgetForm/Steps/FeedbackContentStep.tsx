@@ -7,11 +7,13 @@ import { ScreeshortButton } from '../ScreenshortButton';
 
 interface FeedbackContentStepProps {
   feedbackType: FeedbackType;
+  onFeedbackSent: () => void;
   onFeedbackRestartRequested: () => void;
 }
 
 export function FeedbackContentStep({
   feedbackType,
+  onFeedbackSent,
   onFeedbackRestartRequested,
 }: FeedbackContentStepProps) {
   const [screenchort, setScreenchort] = useState<string | null>(null);
@@ -26,6 +28,8 @@ export function FeedbackContentStep({
       comment,
       screenchort,
     });
+
+    onFeedbackSent();
   }
 
   return (
