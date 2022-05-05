@@ -3,11 +3,11 @@ import React from 'react';
 import { CloseButton } from '../../CloseButton';
 import { FeedbackType, feedbackTypes } from '..';
 
-interface FeedbackProps {
+interface FeedbackCTypeStepProps {
   onFeedbackTypeChanged: React.Dispatch<React.SetStateAction<FeedbackType | null>>;
 }
 
-export function FeedbackTypeStep({ onFeedbackTypeChanged }: FeedbackProps) {
+export function FeedbackTypeStep({ onFeedbackTypeChanged }: FeedbackCTypeStepProps) {
   return (
     <>
       <header>
