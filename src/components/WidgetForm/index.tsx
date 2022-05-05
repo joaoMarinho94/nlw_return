@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import bugSvg from '../assets/bug.svg';
-import ideaSvg from '../assets/idea.svg';
-import thoughtSvg from '../assets/thought.svg';
-import { CloseButton } from '../CloseButton';
+import bugSvg from '../../assets/bug.svg';
+import ideaSvg from '../../assets/idea.svg';
+import thoughtSvg from '../../assets/thought.svg';
 import { FeedbackTypeStep } from './Steps/FeedbackTypeStep';
 
 export const feedbackTypes = {
@@ -37,12 +36,6 @@ export function WidgetForm() {
 
   return (
     <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
-      <header>
-        <span className="text-xl leading-6">Deixe seu Feedback</span>
-
-        <CloseButton />
-      </header>
-
       {feedbackType && <p>hello word</p>}
 
       {!feedbackType && <FeedbackTypeStep onFeedbackTypeChanged={setFeedbackType} />}
