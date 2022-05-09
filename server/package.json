@@ -12,7 +12,9 @@
   },
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "devDependencies": {
     "@swc/core": "^1.2.177",
