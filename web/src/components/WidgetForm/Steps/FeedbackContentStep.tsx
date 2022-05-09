@@ -1,9 +1,11 @@
+import { Loading } from 'components/Loading';
 import { ArrowLeft } from 'phosphor-react';
 import React, { FormEvent, useState } from 'react';
+import { api } from 'service/api';
 
 import { CloseButton } from '../../CloseButton';
 import { FeedbackType, feedbackTypes } from '..';
-import { ScreeshortButton } from '../ScreenshortButton';
+import { ScreeshotButton } from '../ScreenshotButton';
 
 interface FeedbackContentStepProps {
   feedbackType: FeedbackType;
@@ -16,20 +18,30 @@ export function FeedbackContentStep({
   onFeedbackSent,
   onFeedbackRestartRequested,
 }: FeedbackContentStepProps) {
-  const [screenchort, setScreenchort] = useState<string | null>(null);
+  const [screenshot, setscreenshot] = useState<string | null>(null);
   const [comment, setComment] = useState('');
+  const [isSendingLoading, setIsSendingLoading] = useState(false);
 
   const feedbackTypeInfo = feedbackTypes[feedbackType];
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  async function handleSubmit(e: FormEvent) {
+    try {
+      e.preventDefault();
 
-    console.log({
-      comment,
-      screenchort,
-    });
+      setIsSendingLoading(true);
 
-    onFeedbackSent();
+      await api.post('/feedbacks', {
+        type: feedbackType,
+        comment,
+        screenshot,
+      });
+
+      onFeedbackSent();
+    } catch (error) {
+      alert('Ocorreu um erro!');
+    } finally {
+      setIsSendingLoading(false);
+    }
   }
 
   return (
@@ -63,16 +75,13 @@ export function FeedbackContentStep({
         />
 
         <footer className="flex gap-2 mt-2">
-          <ScreeshortButton
-            screenchort={screenchort}
-            onScreenshortTook={setScreenchort}
-          />
+          <ScreeshotButton screenshot={screenshot} onscreenshotTook={setscreenshot} />
 
           <button
-            disabled={!comment}
+            disabled={!comment || isSendingLoading}
             className="p-2 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transtion-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-brand-500"
           >
-            Enviar Feedback
+            {isSendingLoading ? <Loading /> : 'Enviar Feedback'}
           </button>
         </footer>
       </form>
